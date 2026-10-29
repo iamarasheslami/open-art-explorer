@@ -1,0 +1,26 @@
+# =====================================================================
+# Open Art Explorer - .gitattributes
+# Keep line endings the same on every machine and in CI.
+# =====================================================================
+
+# Normalize all text files to LF in the repository and on checkout.
+* text=auto eol=lf
+
+# Windows scripts must keep CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files: never touch or diff as text.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.jar binary
+*.zip binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
