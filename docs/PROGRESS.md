@@ -16,27 +16,35 @@ needs evidence; anything not run is labelled NOT RUN.
   Git 2.55.0.windows.2, JDK 21.0.11 with JAVA_HOME set, global Gradle 8.13,
   ANDROID_HOME set, adb 37.0.0, Build Tools 36.0.0, 36.1.0 and 37.0.0,
   SDK platforms up to API 36.
-- T-0003: Provisional toolchain baseline approved, to be proven by the first clean
-  build (T-0009): Gradle wrapper 9.6.0, Android Gradle Plugin 9.5.0, Build Tools
-  36.0.0 or newer, compileSdk 36, minSdk 23, targetSdk 36, Compose BOM 2026.06.01
-  (Compose UI 1.11.4), Kotlin candidate 2.3.21. Evidence: official AGP 9.5.0
-  release notes (read 2026-10-29) and file checks against the library mirror.
-- T-0004: Repository name `open-art-explorer`, public.
-- T-0005: Application ID `io.github.iamarasheslami.openartexplorer`.
+- T-0003: Provisional toolchain baseline approved (decisions D-003 and D-004), to be
+  proven by the first clean build (T-0009): Gradle wrapper 9.6.0, Android Gradle
+  Plugin 9.5.0, Build Tools 36.0.0 or newer, compileSdk 36, minSdk 23, targetSdk 36,
+  Compose BOM 2026.06.01 (Compose UI 1.11.4), Kotlin candidate 2.3.21.
+  Evidence: official AGP 9.5.0 release notes (read 2026-10-29) and file checks
+  against the library mirror.
+- T-0004: Repository name `open-art-explorer`, public (D-001).
+- T-0005: Application ID `io.github.iamarasheslami.openartexplorer` (D-002).
 - T-0006: Repository created and cloned. Commit identity set for this repository.
-- T-0007 (partly done): `.gitignore`, `.gitattributes` and `README.md` committed
-  and pushed (commits fc7e7fa, 2ffa1d5, e48f89d).
+  Pushing to GitHub works.
+- T-0007 (minimum set): `.gitignore`, `.gitattributes`, `README.md`,
+  `docs/PROGRESS.md`, `docs/MASTER_PROJECT_PROMPT.md` and `docs/DECISIONS.md`
+  committed and pushed, latest commit 6c0ab6a. The master prompt copy was checked
+  by SHA-256 and size. `LICENSE` (Apache-2.0) was created by GitHub.
+  Evidence: git output pasted by the maintainer; remote head checked with
+  `git ls-remote`.
 
 ### In progress
 
-- T-0007: remaining project documents, one file per step. Next action: finish the
-  project records under `docs/`.
+- T-0008: Android scaffold. Not started. Next action: explain the scaffold options,
+  then create the files one at a time, including the optional mirror switch (D-005).
+- Other records from the master prompt (TASKS, SPEC, PLAN, TEST_STRATEGY, SECURITY,
+  RELEASE, OPERATIONS, CONTRIBUTING, CHANGELOG, AGENTS) will be created when they
+  carry real content.
 
 ### Blocked / decisions needed
 
-- Mirror policy: whether library mirror settings are committed in the repository
-  or kept in a personal Gradle init script. To be decided and recorded as an ADR
-  before T-0008.
+- Scaffold approach: use a generator for the standard baseline, or write the files
+  by hand. To be decided and explained in T-0008.
 - Later decisions: theme default, adaptive options, performance budgets, release
   channels.
 
@@ -48,13 +56,14 @@ needs evidence; anything not run is labelled NOT RUN.
   network. Libraries come from a third-party Maven mirror instead.
 - NOT RUN: any Gradle build, test or lint. There is no application code yet.
 - NOT RUN: any check on an API 23 emulator (no image available yet).
+- NOT CONFIRMED: how the README and docs render on GitHub. The maintainer has not
+  reported a visual check.
 
 ### Risks / assumptions changed
 
 - SDK platforms and emulator images come from offline packages that cannot be
   compared with Google's official checksums. Record file hashes for anything used.
-- The build depends on a third-party library mirror, which affects reproducibility
-  for other contributors.
+- The optional mirror switch (D-005) is a design only. It is untested in both modes.
 - minSdk 23 is a requirement but is not yet verified on any Android 6.0 device.
 - Kotlin and Compose version compatibility is unproven until the first build.
 
@@ -62,10 +71,11 @@ needs evidence; anything not run is labelled NOT RUN.
 
 - Android version of the test phone (Honor 8C).
 - First clean local build (T-0009) with exact commands and output.
+- Test of the mirror switch with the mirror on and off.
 - Checksums of SDK packages in use.
 
 ### Next single task
 
-T-0007, next file: `docs/MASTER_PROJECT_PROMPT.md` (the canonical copy of the
-project's working instructions). Acceptance: the file is committed and pushed, and
-`git status` is clean.
+T-0008, step 1: explain the scaffold options and agree the approach. Acceptance:
+the maintainer approves the approach and the list of files to be created, recorded
+in `docs/DECISIONS.md` if it is a material decision.
