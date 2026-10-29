@@ -59,18 +59,25 @@ Maintainer and approver: Arash Eslami (@iamarasheslami).
 
 ## D-005: Library mirror
 
-- **Date / status:** 2026-10-29, Approved (use); repository policy Pending
-- **Decision:** Libraries are fetched through `maven.myket.ir`. The mirror
-  `maven.devneeds.ir` is excluded because on 2026-10-29 it returned an HTML
-  "restricted access" page instead of Maven files.
-- **Options considered:** Google Maven directly (not reachable from the maintainer's
-  network), both mirrors, a single mirror.
+- **Date / status:** 2026-10-29, Approved; implementation to be proven in T-0008
+- **Decision:** Libraries may be fetched through `maven.myket.ir`, enabled by an
+  optional switch. `settings.gradle.kts` adds the mirror first only when a personal
+  Gradle property turns it on. It is off by default, so contributors and CI use
+  Google Maven and Maven Central directly. The mirror `maven.devneeds.ir` is excluded
+  because on 2026-10-29 it returned an HTML "restricted access" page instead of
+  Maven files.
+- **Options considered:** committing the mirror unconditionally; a personal Gradle init
+  script outside the repository; Google Maven directly (not reachable from the
+  maintainer's network).
 - **Reason / trade-offs:** The mirror served the Android Gradle Plugin 9.5.0 files and
-  the Compose BOM on 2026-10-29. It is a third party, so dependency verification
-  (checksums) should stay enabled.
-- **Pending:** whether mirror settings are committed to the repository or kept in a
-  personal Gradle init script. Record an ADR before the Android scaffold (T-0008).
-- **Revisit when:** the mirror stops serving files, or contributors need to build.
+  the Compose BOM on 2026-10-29. An optional switch keeps the maintainer's workflow
+  without making the public project depend on a third party, and lets CI build
+  against official sources as an independent integrity check. The cost is a small
+  block in the committed settings file and one property to set once per machine.
+- **Consequences:** Dependency verification (checksums) stays enabled. The switch and
+  both modes are tested in the Android scaffold step (T-0008). Until then this is a
+  design, not a proven setup.
+- **Revisit when:** the mirror stops serving files, or the switch proves unreliable.files, or contributors need to build.
 
 ## D-006: Test devices
 
