@@ -103,3 +103,21 @@ Maintainer and approver: Arash Eslami (@iamarasheslami).
   apart.
 - **Revisit when:** the contract changes (bump the version) or the content is
   reconsidered for privacy.
+
+## D-008: Android scaffold approach and branch workflow
+
+- **Date / status:** 2026-10-29, Approved
+- **Decision:** Build the Android scaffold from hand-written, reviewed files, with the
+  Gradle wrapper created by the official `gradle wrapper` command. Work happens on
+  the branch `feat/android-scaffold`, one file per commit with conventional commit
+  messages. The branch merges into `main` through GitHub after the first clean build
+  (T-0009) passes.
+- **Options considered:** the Android Studio New Project template (bulk generated,
+  unreviewed, needs Google servers); every file by hand (the Gradle wrapper contains a
+  binary file that cannot be pasted).
+- **Reason / trade-offs:** Every file is reviewed, and `main` never holds a half-finished
+  project that cannot build. The cost is about nine small steps before the first build.
+- **Consequences:** The scaffold contains no features. File syntax is checked against
+  current official documentation before each file is written.
+- **Revisit when:** the first build fails for reasons that point to the scaffold
+  approach itself.
