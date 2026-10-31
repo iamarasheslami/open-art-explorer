@@ -48,13 +48,18 @@ Maintainer and approver: Arash Eslami (@iamarasheslami).
 
 - **Date / status:** 2026-10-29, Provisional until the first clean build (T-0009)
 - **Decision:** JDK 21, Gradle wrapper 9.6.0, Android Gradle Plugin 9.5.0, Build Tools
-  36.0.0 or newer, minSdk 23, compileSdk 36, targetSdk 36, Kotlin candidate 2.3.21.
-- **Options considered:** other versions of each component.
+  36.0.0 or newer, minSdk 23, compileSdk 36, targetSdk 36, Kotlin 2.2.10.
+- **Options considered:** other versions of each component. Kotlin was first a
+  candidate at 2.3.21 and was changed to 2.2.10 on 2026-10-29 (see below).
 - **Reason / trade-offs:** Chosen from the official AGP 9.5.0 requirements (read
   2026-10-29) and from file checks against the library mirror. Compatibility on paper
-  is not proof that it builds.
+  is not proof that it builds. Kotlin 2.2.10 is the Kotlin Gradle plugin version that
+  AGP 9.5.0 itself depends on (read from its pom on the mirror). The Compose compiler
+  plugin 2.3.21 depends on Kotlin Gradle plugin API 2.3.21, which would not match.
+  Risk: Compose 1.11.4 might need a newer Kotlin, to be shown by the first build.
 - **Consequences:** If the first build fails, adjust one component at a time and
-  record the change here.
+  record the change here. The fallback for Kotlin is to keep 2.3.21 and override the
+  Kotlin Gradle plugin version in the root build file.
 - **Revisit when:** the first clean build runs, or a component version changes.
 
 ## D-005: Library mirror
@@ -81,14 +86,15 @@ Maintainer and approver: Arash Eslami (@iamarasheslami).
 
 ## D-006: Test devices
 
-- **Date / status:** 2026-10-29, Approved
-- **Decision:** Use a physical Honor 8C as the only test device for now. API 23
-  emulator testing is deferred.
+- **Date / status:** 2026-10-29, Approved; updated 2026-10-31
+- **Decision:** Use a physical Honor 8C (model BKK-LX2, Android 8.1, API 27) as the
+  only test device for now. API 23 emulator testing is deferred.
 - **Reason / trade-offs:** Only an Android 12 (API 31) emulator image is available,
   and other images cannot be fetched from the official source from the
   maintainer's network.
-- **Consequences:** The minSdk 23 requirement is NOT VERIFIED at API 23. This stays
-  recorded as a known gap and risk.
+- **Consequences:** The scaffold app was first installed and started on the Honor 8C
+  on 2026-10-31. That is API 27, four levels above the minimum. The minSdk 23
+  requirement is NOT VERIFIED at API 23. This stays recorded as a known gap and risk.
 - **Revisit when:** an API 23 image can be obtained, and in any case before release.
 
 ## D-007: Publish the master prompt in this repository
