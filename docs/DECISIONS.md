@@ -48,13 +48,18 @@ Maintainer and approver: Arash Eslami (@iamarasheslami).
 
 - **Date / status:** 2026-10-29, Provisional until the first clean build (T-0009)
 - **Decision:** JDK 21, Gradle wrapper 9.6.0, Android Gradle Plugin 9.5.0, Build Tools
-  36.0.0 or newer, minSdk 23, compileSdk 36, targetSdk 36, Kotlin candidate 2.3.21.
-- **Options considered:** other versions of each component.
+  36.0.0 or newer, minSdk 23, compileSdk 36, targetSdk 36, Kotlin 2.2.10.
+- **Options considered:** other versions of each component. Kotlin was first a
+  candidate at 2.3.21 and was changed to 2.2.10 on 2026-10-29 (see below).
 - **Reason / trade-offs:** Chosen from the official AGP 9.5.0 requirements (read
   2026-10-29) and from file checks against the library mirror. Compatibility on paper
-  is not proof that it builds.
+  is not proof that it builds. Kotlin 2.2.10 is the Kotlin Gradle plugin version that
+  AGP 9.5.0 itself depends on (read from its pom on the mirror). The Compose compiler
+  plugin 2.3.21 depends on Kotlin Gradle plugin API 2.3.21, which would not match.
+  Risk: Compose 1.11.4 might need a newer Kotlin, to be shown by the first build.
 - **Consequences:** If the first build fails, adjust one component at a time and
-  record the change here.
+  record the change here. The fallback for Kotlin is to keep 2.3.21 and override the
+  Kotlin Gradle plugin version in the root build file.
 - **Revisit when:** the first clean build runs, or a component version changes.
 
 ## D-005: Library mirror
