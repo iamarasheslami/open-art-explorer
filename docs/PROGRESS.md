@@ -6,7 +6,7 @@ needs evidence; anything not run is labelled NOT RUN.
 ## Session record
 
 **Date/session:** 2026-10-29 to 2026-10-31, session 1
-**Current phase:** P1, repository and reproducible shell (scaffold built, to be merged)
+**Current phase:** P1, repository and reproducible shell (complete); P2 is next
 
 ### Done and verified
 
@@ -15,12 +15,12 @@ needs evidence; anything not run is labelled NOT RUN.
 - T-0007: project records committed: `README.md`, `.gitattributes`, `.gitignore`,
   `docs/PROGRESS.md`, `docs/DECISIONS.md`, `docs/MASTER_PROJECT_PROMPT.md`.
   `LICENSE` (Apache-2.0) was created by GitHub.
-- T-0008: Android scaffold committed on branch `feat/android-scaffold`, one file per
-  commit: Gradle wrapper pinned to 9.6.0 with distribution checksum (jar SHA-256
-  matches Gradle's published value), `settings.gradle.kts` with the optional mirror
-  switch (D-005), version catalog, root build file, `gradle.properties`, app module
-  build file, manifest, string and theme resources, `MainActivity.kt`, and one
-  placeholder unit test.
+- T-0008: Android scaffold, one file per commit, merged into `main` through pull
+  request #1 (merge commit fc981c0): Gradle wrapper pinned to 9.6.0 with distribution
+  checksum (jar SHA-256 matches Gradle's published value), `settings.gradle.kts` with
+  the optional mirror switch (D-005), version catalog, root build file,
+  `gradle.properties`, app module build file, manifest, string and theme resources,
+  `MainActivity.kt`, and one placeholder unit test.
 - T-0009 (first local build), run by the maintainer on 2026-10-31 with the mirror
   switch on:
   - `gradlew.bat :app:assembleDebug`: BUILD SUCCESSFUL in 6m 2s, 36 tasks, producing
@@ -31,17 +31,21 @@ needs evidence; anything not run is labelled NOT RUN.
   - Installed with `adb install` and started on an Honor 8C (Android 8.1, API 27,
     arm64-v8a): installation Success, process still running after 4 seconds, crash
     log empty, and the screen showed the app name.
+- T-0010: GitHub Actions workflow (`.github/workflows/build.yml`, D-009) added through
+  a pull request and merged. Its first run, with the mirror switch off, was reported
+  green by the maintainer. The run logs were not reviewed here.
 
 ### In progress
 
-- Close T-0008: open a pull request from `feat/android-scaffold` to `main`, review the
-  diff and merge.
+- This documentation update (D-009 and this page), through a pull request.
 - Other records from the master prompt (TASKS, SPEC, PLAN, TEST_STRATEGY, SECURITY,
   RELEASE, OPERATIONS, CONTRIBUTING, CHANGELOG, AGENTS) will be created when they
   carry real content.
 
 ### Blocked / decisions needed
 
+- T-0011 needs the maintainer's review and approval of the requirements and test
+  strategy.
 - Later decisions: theme default, adaptive options, performance budgets, release
   channels, launcher icon, backup and data-extraction rules.
 
@@ -51,8 +55,6 @@ needs evidence; anything not run is labelled NOT RUN.
   components cannot be installed with `sdkmanager` from the maintainer's network.
 - FAILED: three Google Maven metadata URLs returned 404 from the maintainer's
   network. Libraries come from a third-party Maven mirror instead.
-- NOT RUN: any build with the mirror switch off. That needs a network that reaches
-  Google Maven, planned through GitHub Actions (T-0010).
 - NOT RUN: any check on API 23 (device or emulator). The only device is API 27.
 - NOT RUN: instrumented tests, release build, accessibility checks, dependency
   verification metadata.
@@ -78,20 +80,22 @@ needs evidence; anything not run is labelled NOT RUN.
 
 - SDK platforms and emulator images come from offline packages that cannot be
   compared with Google's official checksums. Record file hashes for anything used.
-- The build depends on a third-party library mirror, which affects reproducibility
-  for other contributors. The mirror switch is off by default.
+- The local build depends on a third-party library mirror. The mirror switch is off
+  by default and CI builds without it. A green build shows that official and mirror
+  files both work, not that they are identical.
 - minSdk 23 is a requirement but is not verified on any Android 6.0 device.
 - The toolchain is pinned below the newest versions (compileSdk, Kotlin, Gradle).
   Moving up is a deliberate future task.
 
 ### Evidence still missing
 
-- A build with the mirror switch off (GitHub Actions).
+- Review of the CI run logs.
+- Dependency verification metadata (checksums) to compare mirror and official files.
 - A device or emulator running API 23.
 - Checksums of SDK packages in use.
 
 ### Next single task
 
-Merge `feat/android-scaffold` into `main` through a GitHub pull request. Acceptance:
-the pull request shows only the scaffold files and documentation updates, and after
-merging `main` builds the same way. Then T-0010, continuous integration.
+T-0011: approve the specification and test strategy. Acceptance: requirement IDs and
+acceptance criteria are reviewed and approved by the maintainer, and the test matrix
+is agreed.
