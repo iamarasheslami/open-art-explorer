@@ -109,6 +109,7 @@ Maintainer and approver: Arash Eslami (@iamarasheslami).
   apart.
 - **Revisit when:** the contract changes (bump the version) or the content is
   reconsidered for privacy.
+- **Reconfirmed:** 2026-10-31, kept public and unchanged after a review of its content.
 
 ## D-008: Android scaffold approach and branch workflow
 
@@ -127,3 +128,29 @@ Maintainer and approver: Arash Eslami (@iamarasheslami).
   current official documentation before each file is written.
 - **Revisit when:** the first build fails for reasons that point to the scaffold
   approach itself.
+
+## D-009: Continuous integration and working agreement
+
+- **Date / status:** 2026-10-31, Approved
+- **Decision:** A GitHub Actions workflow (`.github/workflows/build.yml`) builds the
+  debug app, runs the unit tests and runs lint on every pull request and every push
+  to `main`, on `ubuntu-24.04` with Temurin 21. Third-party actions are pinned to full
+  commit SHAs, permissions are read-only, and Gradle caching uses the open-source
+  basic provider. The optional library mirror switch is not set in CI, so CI builds
+  from official sources only.
+- **Working agreement:** Every change goes through a branch and a pull request, created
+  and merged from the terminal with GitHub CLI. Checks must be green before merging.
+  Merges use a merge commit. Commit messages follow Conventional Commits, one file
+  per commit.
+- **Options considered:** the default proprietary Gradle cache provider; unpinned
+  action tags.
+- **Reason / trade-offs:** Building from official sources shows that the project does
+  not depend on the mirror. SHA pins stop a moved tag from changing what runs. The
+  basic cache is less capable than the enhanced one but fully open source.
+- **Consequences:** Pinned actions must be updated deliberately. A green run shows
+  that official files and mirror files both work, not that they are identical.
+  Dependency verification (checksums) is a separate task.
+- **Evidence:** The first run on the CI pull request was reported green by the
+  maintainer on 2026-10-31. The run logs were not reviewed here.
+- **Revisit when:** action versions change, a release or device job is added, or the
+  build time becomes a problem.
