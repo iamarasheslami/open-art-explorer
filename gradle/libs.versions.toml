@@ -1,11 +1,12 @@
 # Open Art Explorer - version catalog.
 # One place for every library and plugin version. See docs/DECISIONS.md, D-003 and D-004.
-# The Kotlin version is also the Compose compiler plugin version. Android Gradle Plugin 9
-# has built-in Kotlin, so there is no separate kotlin-android plugin here.
+# The Kotlin version is also the Compose compiler plugin version. It must match the Kotlin
+# Gradle plugin that AGP 9.5.0 depends on (2.2.10). AGP 9 has built-in Kotlin, so there is
+# no separate kotlin-android plugin here.
 
 [versions]
 agp = "9.5.0"
-kotlin = "2.3.21"
+kotlin = "2.2.10"
 composeBom = "2026.06.01"
 activityCompose = "1.13.0"
 junit = "4.13.2"
