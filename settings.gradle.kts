@@ -42,3 +42,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "open-art-explorer"
+include(":app")
