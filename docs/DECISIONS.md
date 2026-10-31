@@ -86,14 +86,15 @@ Maintainer and approver: Arash Eslami (@iamarasheslami).
 
 ## D-006: Test devices
 
-- **Date / status:** 2026-10-29, Approved
-- **Decision:** Use a physical Honor 8C as the only test device for now. API 23
-  emulator testing is deferred.
+- **Date / status:** 2026-10-29, Approved; updated 2026-10-31
+- **Decision:** Use a physical Honor 8C (model BKK-LX2, Android 8.1, API 27) as the
+  only test device for now. API 23 emulator testing is deferred.
 - **Reason / trade-offs:** Only an Android 12 (API 31) emulator image is available,
   and other images cannot be fetched from the official source from the
   maintainer's network.
-- **Consequences:** The minSdk 23 requirement is NOT VERIFIED at API 23. This stays
-  recorded as a known gap and risk.
+- **Consequences:** The scaffold app was first installed and started on the Honor 8C
+  on 2026-10-31. That is API 27, four levels above the minimum. The minSdk 23
+  requirement is NOT VERIFIED at API 23. This stays recorded as a known gap and risk.
 - **Revisit when:** an API 23 image can be obtained, and in any case before release.
 
 ## D-007: Publish the master prompt in this repository
