@@ -154,3 +154,37 @@ Maintainer and approver: Arash Eslami (@iamarasheslami).
   maintainer on 2026-10-31. The run logs were not reviewed here.
 - **Revisit when:** action versions change, a release or device job is added, or the
   build time becomes a problem.
+
+## D-010: Product and design choices for the first version
+
+- **Date / status:** 2026-11-01, Approved with the phase P2 pull request
+- **Decision:** The first version follows the choices recorded in `docs/SPEC.md`: four
+  top-level destinations, an image-first gallery, discovery from highlights, a High
+  quality default with a Data saver option that changes the whole app, a glassmorphism
+  design with a layered fallback on older devices, rich settings, an animated start
+  that flows into the home screen, and local favorites with defined offline behavior.
+- **Options considered:** The alternatives offered with each question, for example a
+  single-column gallery, a shuffle button, folders for favorites, real blur on every
+  supported device, and fewer settings.
+- **Reason / trade-offs:** The maintainer's answers to the batch of questions. Richer
+  settings and glass effects cost more design and testing work, which is accepted.
+- **Consequences:** 34 requirements are specified. The start-screen details and the
+  blur technique are decided by short tests (OQ-07, OQ-08).
+- **Revisit when:** measurements on the Honor 8C show that effects or paging do not
+  meet the approved budgets.
+
+## D-011: Technology direction
+
+- **Date / status:** 2026-11-01, Approved with the phase P2 pull request
+- **Decision:** MVVM in a single `:app` module with hand-written wiring. Room 3 with
+  KSP and DataStore for storage. OkHttp and kotlinx.serialization for the network.
+  Coil 3 for images. Navigation 3 for navigation. The core-splashscreen library for the
+  start. Coroutines and Flow. The reasoning is in `docs/adr/`.
+- **Options considered:** Room 2.x, Navigation Compose 2.9, Hilt, Ktor and Glide.
+- **Reason / trade-offs:** Room 3 and Navigation 3 are the current stable lines. A small
+  app does not need a dependency-injection framework or several modules.
+- **Consequences:** Library versions are pinned when first used and proven by CI at
+  compileSdk 36. A library that needs compileSdk 37 is replaced by an older version,
+  or D-003 is revisited.
+- **Revisit when:** a library cannot be built at compileSdk 36, or a package grows large
+  enough to justify its own module.
